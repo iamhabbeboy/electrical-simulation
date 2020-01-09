@@ -1,0 +1,64 @@
+[{
+    "id": 1,
+    "name": "bulb",
+    "size": {
+        "small": 15,
+        "medium": 30,
+        "big": 70
+    },
+    "image": "bulb"
+},
+{
+    "id": 2,
+    "name": "standing fan",
+    "size": 50,
+    "image": "fan"
+},
+{
+    "id": 3,
+    "name": "fridge",
+    "size": {
+        "small": 80,
+        "medium": 150
+    },
+    "image": "fridge"
+},
+{
+    "id": 4,
+    "name": "sound system",
+    "size": {
+        "medium": 120,
+        "soundbar": 40
+    },
+    "image": "sound"
+},
+{
+    "id": 5,
+    "name": "phone charging",
+    "size": 10,
+    "image": "phone"
+},
+{
+    "id": 6,
+    "name": "laptop",
+    "size": {
+        "pc": 40,
+        "mac": 70
+    },
+    "image": "macbook"
+},
+{
+    "id": 7,
+    "name": "computer",
+    "size": {
+        "allinone": 200,
+        "desktop": 300
+    },
+    "image": "computer"
+},
+{
+    "id": 8,
+    "name": "printer",
+    "size": 85,
+    "image": "printer"
+}]
