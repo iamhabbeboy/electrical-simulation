@@ -2,12 +2,14 @@
   <div>
     <h1>Simulation</h1>
     <div class="simulator">
-      <div style="height: 200px;border-bottom: 3px solid orange;">
+      <div class="inner-simulator">
         <div style="padding-bottom: 10px;padding-top: 10px;">
-          <h3>Simulator Box</h3>
+          <h3 style="text-align:center">Simulator Box</h3>
         </div>
-        <div v-for="(appliance, index) of appliances" :key="index">
-          <Element :url="appliance.image" />
+        <div class="simulator-box">
+          <div v-for="(appliance, index) of appliances" :key="index">
+            <Element :url="appliance.image" />
+          </div>
         </div>
       </div>
       <div style="clear:both;width: 20%;margin: 0px auto;text-align:center;">
@@ -26,7 +28,6 @@
         </div>
       </div>
     </div>
-    <!-- {{ appliances }} -->
   </div>
 </template>
 
@@ -51,17 +52,33 @@ export default {
 </script>
 <style lang="scss">
 .simulator {
-  height: 420px;
+  min-height: 420px;
   background: #ffffff;
   border: 5px solid gold;
-  div.pole-holder {
-    float: left;
-    margin-right: 20px;
-    margin-left: 20px;
-    height: 60px;
-    :nth-child(2) {
-      height: inherit;
-    }
+  .inner-simulator {
+    min-height: 200px;
+    border-bottom: 3px solid orange;
+  }
+}
+
+.simulator-box {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.pole-holder {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 45px;
+  border-bottom: 3px solid orange;
+  height: 40px;
+  margin-bottom: 25px;
+
+  :nth-child(2) {
+    height: inherit;
+    position: relative;
+    bottom: 7px;
   }
 }
 .pole-wire {

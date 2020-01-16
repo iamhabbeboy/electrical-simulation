@@ -17,7 +17,9 @@
       </div>
       <div class="list-holder">
         <Category />
-        <!-- @addAppliance="updateAppliance"-->
+      </div>
+      <div>
+        <Selection />
       </div>
       <div>
         <h4>Recommendation</h4>
@@ -37,13 +39,15 @@
 <script>
 import json from "../assets/data/appliances.json";
 import Category from "@/components/Category.vue";
+import Selection from "@/components/Selection.vue";
 import Output from "@/components/Output.vue";
 import { EventBus } from "@/event-bus.js";
 
 export default {
   components: {
     Category,
-    Output
+    Output,
+    Selection
   },
   data() {
     return {
@@ -78,8 +82,9 @@ export default {
 }
 .app-holder {
   display: flex;
+  flex-wrap: wrap;
   div {
-    width: 300px;
+    width: 280px;
     h4 {
       margin: 0px;
       padding: 0px;

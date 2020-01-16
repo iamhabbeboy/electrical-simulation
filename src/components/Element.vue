@@ -16,9 +16,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  mounted() {
-    // this.url = 
   }
 };
 </script>
