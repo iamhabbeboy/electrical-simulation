@@ -43,7 +43,7 @@
             style="position: relative;top: 3px;"
           />&nbsp;Refresh
         </button>
-        <button class="save" @click="save" disabled>
+        <button class="save" @click="save">
           <img
             src="../assets/upload.svg"
             width="13"
@@ -75,9 +75,10 @@ export default {
   methods: {
     refresh() {
       if (window.confirm("Are you sure ?")) {
-        EventBus.$off("ADD");
-        EventBus.$off("WATT");
-        this.appliances = [];
+        // EventBus.$off("ADD");
+        // EventBus.$off("WATT");
+        // this.appliances = [];
+        window.location.reload();
       }
     },
     save() {}

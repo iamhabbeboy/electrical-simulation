@@ -5,7 +5,7 @@
       {{ index | toUFirst }}: {{ device }}
     </div>
     <div v-if="!listDevice">
-      <p>No appliances selected</p>
+      <p>No appliance(s) selected</p>
     </div>
   </div>
 </template>
