@@ -47,7 +47,9 @@ export default {
         return 0;
       }
       result = result.toFixed(2);
-      return this.inverterRecommendation(result);
+      const recommendation = this.inverterRecommendation(result);
+      this.storage(recommendation);
+      return recommendation;
     },
     appliances() {
       return this.watts.length;
@@ -59,6 +61,15 @@ export default {
         return Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev;
       });
       return closest;
+    },
+    storage(data) {
+      const date = new Date();
+      const store = {
+        time: date,
+        data: data,
+        watt: this.totalWatt
+      };
+      localStorage.setItem("_SIMULATION_DATA", JSON.stringify(store));
     }
   },
   mounted() {
