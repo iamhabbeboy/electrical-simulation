@@ -1,12 +1,12 @@
 <template>
   <div>
     <h4>Selection</h4>
-    <!-- <div v-if="listDevice"> -->
-      <div v-for="(device, index) of listDevice" :key="index">
-        {{ index }}: {{ device }}
-      </div>
-    <!-- </div> -->
-		{{ listDevice }}
+    <div v-for="(device, index) of listDevice" :key="index">
+      {{ index | toUFirst }}: {{ device }}
+    </div>
+    <div v-if="!listDevice">
+      <p>No appliances selected</p>
+    </div>
   </div>
 </template>
 <script>
@@ -15,7 +15,8 @@ import { EventBus } from "@/event-bus.js";
 export default {
   data() {
     return {
-      device: []
+      device: [],
+      MAX_WATT: 7000
     };
   },
   computed: {
@@ -32,8 +33,15 @@ export default {
   },
   mounted() {
     EventBus.$on("ADD", value => {
+      // if (this.totalWatt <= this.MAX_WATT) {
       this.device.push(value);
+      // }
     });
+  },
+  filters: {
+    toUFirst(value) {
+      return value.substring(0, 1).toUpperCase() + "" + value.substring(1);
+    }
   }
 };
 </script>

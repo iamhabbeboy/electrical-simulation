@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Output</h4>
+    <h4>Inverter Recommendation</h4>
     <div style="text-align: center">
       <h1>{{ power }} KVA</h1>
       <p>Total Watt: {{ totalWatt }}W</p>
@@ -17,7 +17,11 @@ export default {
   data() {
     return {
       watts: [],
-      powerFactor: 0.8
+      powerFactor: 0.8,
+      CONVERT_TO_KV: 1000,
+      MAX_WATT: 7000,
+      TOLERANCE: 0.3,
+      inverters: [1.2, 2.5, 3.0, 3.5, 4.0, 5.0, 7.5, 10]
     };
   },
   computed: {
@@ -35,19 +39,33 @@ export default {
       if (this.totalWatt === 0) {
         return 0;
       }
-      const result = this.totalWatt / this.powerFactor;
+      let output = 0;
+      let result = this.totalWatt / this.powerFactor;
+      result = result / this.CONVERT_TO_KV;
+      result = result + this.TOLERANCE;
       if (result <= 0) {
         return 0;
       }
-      return Math.floor(result);
+      result = result.toFixed(2);
+      return this.inverterRecommendation(result);
     },
     appliances() {
       return this.watts.length;
     }
   },
+  methods: {
+    inverterRecommendation(target) {
+      const closest = this.inverters.reduce((prev, curr) => {
+        return Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev;
+      });
+      return closest;
+    }
+  },
   mounted() {
     EventBus.$on("ADD", value => {
-      this.watts.push(value);
+      if (this.totalWatt <= this.MAX_WATT) {
+        this.watts.push(value);
+      }
     });
   }
 };

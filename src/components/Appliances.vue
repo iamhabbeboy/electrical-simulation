@@ -22,16 +22,14 @@
         <Selection />
       </div>
       <div>
-        <h4>Recommendation</h4>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odit
-          quaerat deleniti quia voluptatibus earum aliquam, ut fugit culpa unde
-          minus reprehenderit totam repellendus nihil alias perspiciatisratione
-          voluptatem et.
-        </p>
+        <Output />
       </div>
       <div>
-        <Output />
+        <h4>Contact</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odit
+          quaerat deleniti quia voluptatibus earum aliquam.
+        </p>
       </div>
     </div>
   </div>
