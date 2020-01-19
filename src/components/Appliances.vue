@@ -25,10 +25,11 @@
         <Output />
       </div>
       <div>
-        <h4>Contact</h4>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odit
-          quaerat deleniti quia voluptatibus earum aliquam.
+        <h4>Our Support Team</h4>
+        <p style="font-size:14px;">
+          +2348133614766, +2348055507328
+          <br/>
+          support@megatronicspower.com
         </p>
       </div>
     </div>

@@ -44,8 +44,10 @@
       </h1>
     </div>
     <div class="contact">
-      <br />You need such inverter,
       <br />
+      <br />
+      <a href="https://megatronicspower.com">Our Store</a>
+      /
       <a href="mailto:hello@megatronicspower.com">Contact Us</a>
       /
       <a href="mailto:developer@megatronicspower.com">Feedback</a>
@@ -71,18 +73,10 @@
       </div>
       <div class="button-placeholder">
         <button class="refresh" @click="refresh">
-          <img
-            src="../assets/refresh.svg"
-            width="13"
-            style="position: relative;top: 3px;"
-          />&nbsp;Refresh
+          <img src="../assets/refresh.svg" width="13" style="position: relative;top: 3px;" />&nbsp;Refresh
         </button>
-        <button class="save" @click="save">
-          <img
-            src="../assets/upload.svg"
-            width="13"
-            style="position: relative;top: 3px;"
-          />&nbsp;Contact Us
+        <button class="save" @click="save" :disabled="appliances.length < 1">
+          <img src="../assets/upload.svg" width="13" style="position: relative;top: 3px;" />&nbsp;I want this specification
         </button>
       </div>
     </div>
@@ -93,6 +87,7 @@
 import Swal from "sweetalert2";
 import { EventBus } from "@/event-bus.js";
 import Element from "@/components/Element.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -121,6 +116,7 @@ export default {
       }).then(result => {
         if (result.value) {
           window.location.reload();
+          localStorage.removeItem("_SIMULATION_DATA");
         }
       });
     },
@@ -139,8 +135,28 @@ export default {
         }
       });
       if (formValues) {
-        Swal.fire(JSON.stringify(formValues));
+        this.storeUser(formValues);
+        // Swal.fire(JSON.stringify(formValues));
       }
+    },
+    async storeUser(details) {
+      const headers = {
+        headers: {
+          Authorization: "Bearer 4297f44b13955235245b2497399d7a93"
+        }
+      };
+      const data = {
+        name: "abiodun",
+        watt: 100,
+        recommendation: 1.5,
+        email: "solomon@gmail.com"
+      };
+      await axios
+        .post("https://api.megatronicspower.com?action=add_user", data, headers)
+        .then(result => {
+          // eslint-disable-next-line no-console
+          console.log(result); //eslint-disable-line;
+        });
     }
   }
 };
