@@ -75,8 +75,15 @@
         <button class="refresh" @click="refresh">
           <img src="../assets/refresh.svg" width="13" style="position: relative;top: 3px;" />&nbsp;Refresh
         </button>
-        <button class="save" @click="save" :disabled="appliances.length < 1">
-          <img src="../assets/upload.svg" width="13" style="position: relative;top: 3px;" />&nbsp;I want this specification
+        <button
+          class="save"
+          @click="save"
+          :disabled="appliances.length < 1 || isLoading"
+        >
+          <span v-if="isLoading">please wait...</span>
+          <span v-if="!isLoading">
+            <img src="../assets/upload.svg" width="13" style="position: relative;top: 3px;" />&nbsp;I want this specification
+          </span>
         </button>
       </div>
     </div>
@@ -95,7 +102,8 @@ export default {
   },
   data() {
     return {
-      appliances: []
+      appliances: [],
+      isLoading: false
     };
   },
   mounted() {
@@ -125,7 +133,7 @@ export default {
         title: "Contact Us for the specification",
         html:
           'Name: <input id="swal-input1" class="swal2-input">' +
-          'Email Address: <input id="swal-input2" class="swal2-input">',
+          'Phone Number: <input id="swal-input2" class="swal2-input">',
         focusConfirm: false,
         preConfirm: () => {
           return [
@@ -135,27 +143,72 @@ export default {
         }
       });
       if (formValues) {
+        if (formValues[0] == "" || !formValues[0].match(/^[a-zA-Z\s]+$/)) {
+          Swal.fire({
+            title: "Notification",
+            text: "Valid name is required",
+            icon: "error"
+          });
+          return;
+        } else if (
+          formValues[1] == "" ||
+          !formValues[1].match(/^[0-9]+$/) ||
+          formValues[1].length < 11 ||
+          formValues[1].length > 11
+        ) {
+          Swal.fire({
+            title: "Notification",
+            text: "Phone Number is required and must be 11 digit",
+            icon: "error"
+          });
+          return;
+        }
+        this.isLoading = true;
         this.storeUser(formValues);
-        // Swal.fire(JSON.stringify(formValues));
       }
     },
     async storeUser(details) {
+      const [name, email] = details;
+      const activity = localStorage.getItem("_SIMULATION_DATA");
+      if (activity == undefined) {
+        Swal.fire("Error Occured !");
+        return;
+      }
+      const { data, watt } = JSON.parse(activity);
       const headers = {
         headers: {
           Authorization: "Bearer 4297f44b13955235245b2497399d7a93"
         }
       };
-      const data = {
-        name: "abiodun",
-        watt: 100,
-        recommendation: 1.5,
-        email: "solomon@gmail.com"
+      const that = this;
+      const payload = {
+        name: name,
+        watt: watt,
+        recommendation: data,
+        email: email
       };
       await axios
-        .post("https://api.megatronicspower.com?action=add_user", data, headers)
+        .post(
+          "https://api.megatronicspower.com?action=add_user",
+          payload,
+          headers
+        )
         .then(result => {
-          // eslint-disable-next-line no-console
-          console.log(result); //eslint-disable-line;
+          if (result.data.status == "success") {
+            Swal.fire({
+              title: "Notification",
+              text:
+                "Information sent successfully, our technical department will contact you soon. Thank you",
+              icon: "success"
+            });
+          }
+          that.isLoading = false;
+          setTimeout(() => {
+            window.location.reload();
+          }, 10000);
+        })
+        .catch(err => {
+          Swal.fire("Error occured");
         });
     }
   }
